@@ -1,0 +1,57 @@
+const backendUrl = 'http://localhost:3000';  // Your backend server URL
+
+function trainModel() {
+    let inputData = document.getElementById('dataInput').value;
+    let mlModel = document.getElementById('mlModel').value;
+
+    fetch(`${backendUrl}/train`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: inputData, model: mlModel })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        showProofSection();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function makePrediction() {
+    let inputData = document.getElementById('dataInput').value;
+    let mlModel = document.getElementById('mlModel').value;
+
+    fetch(`${backendUrl}/predict`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: inputData, model: mlModel })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        showProofSection();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function generateProof() {
+    let inputData = document.getElementById('dataInput').value;
+    let mlModel = document.getElementById('mlModel').value;
+
+    fetch(`${backendUrl}/generateProof`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: inputData, model: mlModel })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('proofMessage').innerText = data.message;
+    })
+    .catch(error => console.error('Error:', error));
+}
